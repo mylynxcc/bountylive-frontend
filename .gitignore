@@ -1,0 +1,54 @@
+# Flutter/Dart
+*.iml
+.idea/
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.lock
+pubspec.lock
+
+# MacOS
+.DS_Store
+
+# Android
+*.apk
+*.aab
+local.properties
+android/.gradle/
+android/app/build/
+android/key.properties
+android/captures/
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+
+# Windows
+windows/flutter/
+windows/runner/flutter/
+windows/plugins/
+
+# Linux
+linux/flutter/
+linux/runner/flutter/
+linux/plugins/
+
+# Web
+web/fonts/
+
+# Misc
+*.swp
+*.swo
+*~
+.DartTool/
