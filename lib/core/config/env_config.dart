@@ -37,6 +37,42 @@ class Environment {
     defaultValue: 'pk_test_example',
   );
 
+  /// Firebase web configuration for FlutterFire initialization on Web platform
+  static const String firebaseApiKey = String.fromEnvironment(
+    'FIREBASE_API_KEY',
+    defaultValue: 'AIzaSyDC5vksFcIoV7cwH0CmuY_DBPSrYbtbWBQ',
+  );
+
+  static const String firebaseAuthDomain = String.fromEnvironment(
+    'FIREBASE_AUTH_DOMAIN',
+    defaultValue: 'bountylive-75675.firebaseapp.com',
+  );
+
+  static const String firebaseProjectId = String.fromEnvironment(
+    'FIREBASE_PROJECT_ID',
+    defaultValue: 'bountylive-75675',
+  );
+
+  static const String firebaseStorageBucket = String.fromEnvironment(
+    'FIREBASE_STORAGE_BUCKET',
+    defaultValue: 'bountylive-75675.firebasestorage.app',
+  );
+
+  static const String firebaseMessagingSenderId = String.fromEnvironment(
+    'FIREBASE_MESSAGING_SENDER_ID',
+    defaultValue: '406401186705',
+  );
+
+  static const String firebaseAppId = String.fromEnvironment(
+    'FIREBASE_APP_ID',
+    defaultValue: '1:406401186705:web:021c3b0adab502fe9c7830',
+  );
+
+  static const String firebaseMeasurementId = String.fromEnvironment(
+    'FIREBASE_MEASUREMENT_ID',
+    defaultValue: 'G-EWWFD97EPZ',
+  );
+
   /// Whether the app is in debug mode
   static bool get isDebug => const bool.fromEnvironment('dart.vm.product') == false;
 
