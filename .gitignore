@@ -16,6 +16,8 @@ pubspec.lock
 # Android
 *.apk
 *.aab
+*.jks
+*.keystore
 local.properties
 android/.gradle/
 android/app/build/
