@@ -130,7 +130,7 @@ class _RetryInterceptor extends Interceptor {
         err.type == DioExceptionType.receiveTimeout) {
       try {
         await Future.delayed(const Duration(seconds: 2));
-        final response = await err.requestOptions.copyWith().execute();
+        final response = await Dio().fetch(err.requestOptions);
         handler.resolve(response);
         return;
       } catch (e) {

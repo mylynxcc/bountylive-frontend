@@ -83,7 +83,7 @@ class BountyLiveTheme {
         ),
       ),
 
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: BountyLiveColors.darkCard,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -165,7 +165,7 @@ class BountyLiveTheme {
         thickness: 1,
       ),
 
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: BountyLiveColors.darkSurface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -208,7 +208,7 @@ class BountyLiveTheme {
         ),
       ),
 
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: BountyLiveColors.lightSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(

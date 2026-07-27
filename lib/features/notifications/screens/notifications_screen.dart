@@ -56,7 +56,7 @@ class NotificationsScreen extends ConsumerWidget {
             ];
             final subtitles = [
               'JohnDoe started following you',
-              'JaneDoe donated $10',
+              r'JaneDoe donated $10',
               'Your stream starts in 30 minutes',
               'You earned "First Stream"!',
               'User123 wants to follow you',

@@ -8,7 +8,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = ref.watch(themeModeProvider).valueOrNull ?? true;
+    final isDark = ref.watch(themeModeProvider).asData?.value ?? true;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),

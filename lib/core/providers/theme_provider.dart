@@ -12,7 +12,7 @@ class ThemeModeNotifier extends AsyncNotifier<bool> {
   }
 
   Future<void> toggle() async {
-    final newValue = !(state.valueOrNull ?? true);
+    final newValue = !(state.asData?.value ?? true);
     state = AsyncData(newValue);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_dark_mode', newValue);

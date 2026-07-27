@@ -44,7 +44,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final authAsync = ref.watch(authProvider);
-    final authState = authAsync.valueOrNull;
+    final authState = authAsync.asData?.value;
     final isLoading = authAsync.isLoading;
 
     return Scaffold(

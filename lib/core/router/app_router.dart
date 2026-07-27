@@ -133,7 +133,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   );
 
   ref.listen(authProvider, (previous, next) {
-    if (previous?.valueOrNull?.isLoggedIn != next.valueOrNull?.isLoggedIn) {
+    if (previous?.asData?.value?.isLoggedIn != next.asData?.value?.isLoggedIn) {
       router.refresh();
     }
   });

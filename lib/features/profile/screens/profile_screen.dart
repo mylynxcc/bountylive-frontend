@@ -120,15 +120,15 @@ class ProfileScreen extends ConsumerWidget {
             ),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 1.6,
-                ),
-                itemCount: 6,
-                itemBuilder: (context, index) => Container(
+              sliver:            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 12,
+                childAspectRatio: 1.6,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: isDark
@@ -145,7 +145,9 @@ class ProfileScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
+                childCount: 6,
               ),
+            ),
             ),
             const SliverPadding(padding: EdgeInsets.only(bottom: 40)),
           ],
