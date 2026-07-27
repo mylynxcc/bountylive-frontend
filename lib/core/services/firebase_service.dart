@@ -1,7 +1,10 @@
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
 import '../config/env_config.dart';
 
 /// Initializes Firebase for all platforms and enables
@@ -42,30 +45,26 @@ class FirebaseService {
     // On mobile, Analytics is collected automatically via the native SDKs.
     // On web, screen views and events are logged through the JS SDK.
     // Set this to `false` only if the user has explicitly opted out.
-    await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
+    await analytics.setAnalyticsCollectionEnabled(true);
 
     // ── Crashlytics ────────────────────────────────────────────
     // Pass all Flutter errors (including those caught by runZonedGuarded)
     // through to Crashlytics so every crash is recorded.
     FlutterError.onError = (errorDetails) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+      crashlytics.recordFlutterFatalError(errorDetails);
     };
 
     // Catch errors thrown outside the Flutter widget tree.
     PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      crashlytics.recordError(error, stack, fatal: true);
       return true;
     };
 
     // Enable Crashlytics collection.
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    await crashlytics.setCrashlyticsCollectionEnabled(true);
 
-    // Log a sentinel event so the first-crash report includes a session start.
-    await FirebaseCrashlytics.instance.recordError(
-      'FirebaseService.initialize() — session started',
-      StackTrace.current,
-      fatal: false,
-      information: ['App launched: ${Environment.appVersion}'],
-    );
+    // Leave a breadcrumb so the first crash report has session context
+    // without creating a separate non-fatal issue in the dashboard.
+    crashlytics.log('App launched: ${Environment.appVersion}');
   }
 }
