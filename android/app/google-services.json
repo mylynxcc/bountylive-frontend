@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1094371547527:android:95991c7f125bd7eabe9b22",
         "android_client_info": {
-          "package_name": "com.swiftex.lynx"
+          "package_name": "com.bountylive.app"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "1094371547527-51lo4ku736rm6q7seull89j2dt4g3tf5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.swiftex.lynx",
+            "package_name": "com.bountylive.app",
             "certificate_hash": "706e8c20e943e8eb16bb5146c5d131c1373cc4de"
           }
         },
@@ -42,7 +42,7 @@
               "client_id": "1094371547527-84uv8nug9rg9t0c2v00o73pqr9at9vnl.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.swiftex.lynx"
+                "bundle_id": "com.bountylive.app"
               }
             }
           ]
