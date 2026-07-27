@@ -163,8 +163,6 @@ lib/
 │   ├── stream/                        # Live streaming (watch & broadcast)
 │   └── wallet/                        # Wallet & payments
 │
-├── backend/                          # [Separate Laravel API repo]
-│
 assets/
 ├── images/                           # PNG, JPEG assets
 ├── icons/                            # SVG icons
@@ -226,10 +224,9 @@ The `ApiClient` class wraps **Dio** with automatic:
 
 ### Prerequisites
 
-- **Flutter SDK** ^3.7.0 ([install guide](https://docs.flutter.dev/get-started/install))
-- **Dart** ^3.7.0 (bundled with Flutter)
+- **Flutter 3.x** (Dart SDK ^3.7.0) ([install guide](https://docs.flutter.dev/get-started/install))
 - **Android Studio** or **Xcode** for platform builds
-- A running instance of the [BountyLive Laravel backend](https://github.com/mylynxcc/bountylive-api)
+- A running instance of the [BountyLive Laravel backend](your-backend-repo-url)
 
 ### Installation
 
@@ -315,11 +312,17 @@ cd scripts && ./release_build.sh
 ### Code Generation
 
 ```bash
-# Run code generators once
-dart run build_runner build
+# Run code generators once (JSON serializers, Hive adapters, Retrofit API)
+dart run build_runner build --delete-conflicting-outputs
 
 # Watch mode (auto-generate on changes)
 dart run build_runner watch
+
+# Generate launcher icons (uses flutter_launcher_icons config from pubspec.yaml)
+dart run flutter_launcher_icons
+
+# Generate native splash screen (uses flutter_native_splash config)
+dart run flutter_native_splash:create
 ```
 
 ### Linting & Analysis
@@ -354,7 +357,13 @@ BountyLive requires a Laravel backend API. The API is built separately and provi
 - **File upload** handling for bounty submissions
 - **Push notification** delivery
 
-> The backend repository is maintained separately. Contact the maintainer for access.
+> The backend repository is maintained separately. If you are the project maintainer, ensure the API is running before launching the frontend.
+
+---
+
+## 📄 Project Status
+
+This project is in **active development**. Features are being added and refined regularly. Contributions, feedback, and bug reports are welcome.
 
 ---
 
