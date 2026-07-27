@@ -1,0 +1,179 @@
+# BountyLive – Codemagic CI/CD Configuration
+# =============================================
+# Commit this file to the repo root (frontend/ directory on Codemagic).
+# Codemagic will auto-detect it and use it for build configuration.
+#
+# Environment variable groups to create in Codemagic UI:
+#   android_signing: CM_KEYSTORE, CM_KEYSTORE_PASSWORD, CM_KEY_PASSWORD, CM_KEY_ALIAS
+#   firebase_credentials: ANDROID_FIREBASE_SECRET, IOS_FIREBASE_SECRET
+#   app_store_credentials: APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER,
+#                          APP_STORE_CONNECT_PRIVATE_KEY, CERTIFICATE_PRIVATE_KEY
+#   bounty_env: API_BASE_URL
+
+workflows:
+  android-release:
+    name: Android Release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      groups:
+        - android_signing
+        - firebase_credentials
+        - bounty_env
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+        - ~/.gradle/caches
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    scripts:
+      - name: Set up keystore
+        script: |
+          echo $CM_KEYSTORE | base64 --decode > $CM_BUILD_DIR/android/app/my-release-key.jks
+          cat > $CM_BUILD_DIR/android/key.properties <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=my-release-key.jks
+          EOF
+      - name: Get Flutter dependencies
+        script: flutter pub get
+      - name: Build Android app bundle
+        script: |
+          flutter build appbundle --release \
+            --android-skip-build-dependency-validation \
+            --obfuscate \
+            --split-debug-info=build/debug-info/android
+    artifacts:
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - build/debug-info/android/**/*
+
+  ios-release:
+    name: iOS Release
+    max_build_duration: 90
+    instance_type: mac_mini_m2
+    environment:
+      groups:
+        - app_store_credentials
+        - firebase_credentials
+        - bounty_env
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+        - ~/.cocoapods
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    scripts:
+      - name: Get Flutter dependencies
+        script: flutter pub get
+      - name: Install CocoaPods
+        script: |
+          cd ios && pod install --repo-update
+      - name: Build iOS release
+        script: |
+          flutter build ios --release --no-codesign
+      - name: Build iOS archive
+        script: |
+          cd ios
+          xcodebuild -workspace Runner.xcworkspace \
+            -scheme Runner \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath $CM_BUILD_DIR/build/ios/Runner.xcarchive \
+            clean archive \
+            DEVELOPMENT_TEAM=$CM_DEVELOPMENT_TEAM \
+            PROVISIONING_PROFILE_SPECIFIER=$CM_PROVISIONING_PROFILE
+      - name: Export IPA
+        script: |
+          xcodebuild -exportArchive \
+            -archivePath $CM_BUILD_DIR/build/ios/Runner.xcarchive \
+            -exportPath $CM_BUILD_DIR/build/ios/ipa \
+            -exportOptionsPlist $CM_BUILD_DIR/ios/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/ios/Runner.xcarchive
+
+  macos-release:
+    name: macOS Release
+    max_build_duration: 90
+    instance_type: mac_mini_m2
+    environment:
+      groups:
+        - bounty_env
+      flutter: stable
+      xcode: latest
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    scripts:
+      - name: Get Flutter dependencies
+        script: flutter pub get
+      - name: Build macOS release
+        script: |
+          flutter build macos --release
+    artifacts:
+      - build/macos/**/*.app
+      - build/macos/**/*.pkg
+
+  web-release:
+    name: Web Release
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      groups:
+        - bounty_env
+      flutter: stable
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+    scripts:
+      - name: Get Flutter dependencies
+        script: flutter pub get
+      - name: Build web release
+        script: |
+          flutter build web --release \
+            --dart-define=FIREBASE_API_KEY=$FIREBASE_API_KEY \
+            --dart-define=FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN \
+            --dart-define=FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID \
+            --dart-define=FIREBASE_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET \
+            --dart-define=FIREBASE_MESSAGING_SENDER_ID=$FIREBASE_MESSAGING_SENDER_ID \
+            --dart-define=FIREBASE_APP_ID=$FIREBASE_APP_ID \
+            --dart-define=FIREBASE_MEASUREMENT_ID=$FIREBASE_MEASUREMENT_ID
+      - name: Deploy to Firebase Hosting
+        script: |
+          # Uncomment and configure when Firebase Hosting is ready
+          # firebase deploy --only hosting --project $FIREBASE_PROJECT_ID
+          echo "Web build ready at build/web/"
+    artifacts:
+      - build/web/**
