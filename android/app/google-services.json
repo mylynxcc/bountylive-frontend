@@ -1,51 +1,26 @@
 {
   "project_info": {
-    "project_number": "1094371547527",
-    "project_id": "mylynxride",
-    "storage_bucket": "mylynxride.firebasestorage.app"
+    "project_number": "406401186705",
+    "project_id": "bountylive-75675",
+    "storage_bucket": "bountylive-75675.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1094371547527:android:95991c7f125bd7eabe9b22",
+        "mobilesdk_app_id": "1:406401186705:android:4918192e27f36f7e9c7830",
         "android_client_info": {
           "package_name": "com.bountylive.app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1094371547527-51lo4ku736rm6q7seull89j2dt4g3tf5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.bountylive.app",
-            "certificate_hash": "706e8c20e943e8eb16bb5146c5d131c1373cc4de"
-          }
-        },
-        {
-          "client_id": "1094371547527-tr98me7r5rp0knq7rbag2k0cj04d7ft5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA6x4NtFa1c-OJU1jFjufI_39vK7ysWmqc"
+          "current_key": "AIzaSyCsHEWqv-Xvly0yLFHXHym6QA_qqh5OfDE"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1094371547527-tr98me7r5rp0knq7rbag2k0cj04d7ft5.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1094371547527-84uv8nug9rg9t0c2v00o73pqr9at9vnl.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.bountylive.app"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
