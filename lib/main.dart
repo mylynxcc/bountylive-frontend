@@ -17,7 +17,11 @@ import 'core/utils/splash_stub.dart'
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await FirebaseService.initialize();
+  try {
+    await FirebaseService.initialize();
+  } catch (e, stack) {
+    debugPrint('❌ Firebase initialization failed: $e\n$stack');
+  }
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
