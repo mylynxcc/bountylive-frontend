@@ -226,7 +226,7 @@ The `ApiClient` class wraps **Dio** with automatic:
 
 - **Flutter 3.x** (Dart SDK ^3.7.0) ([install guide](https://docs.flutter.dev/get-started/install))
 - **Android Studio** or **Xcode** for platform builds
-- A running instance of the [BountyLive Laravel backend](your-backend-repo-url)
+- A running instance of the BountyLive Laravel backend API
 
 ### Installation
 
