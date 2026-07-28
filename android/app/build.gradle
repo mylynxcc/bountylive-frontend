@@ -1,3 +1,7 @@
+// =============================================================================
+// BountyLive – Android App Build Configuration
+// =============================================================================
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
@@ -6,11 +10,19 @@ plugins {
     id "com.google.firebase.crashlytics"
 }
 
+// =============================================================================
+// Release Signing (key.properties in android/)
+// =============================================================================
+
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
+
+// =============================================================================
+// Android
+// =============================================================================
 
 android {
     namespace = "com.bountylive.app"
@@ -18,11 +30,11 @@ android {
     ndkVersion = flutter.ndkVersion
 
     buildFeatures {
-        buildConfig = true
+        buildConfig = true              // needed for BuildConfigField
     }
 
     compileOptions {
-        coreLibraryDesugaringEnabled = true
+        coreLibraryDesugaringEnabled = true  // required by flutter_local_notifications
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -39,15 +51,18 @@ android {
         versionName = "1.0.0"
         multiDexEnabled = true
 
-        // API base URL — override via --dart-define at build time
-        buildConfigField "String", "API_BASE_URL", "\"${System.getenv('API_BASE_URL') ?: 'https://api.bountylive.com/api/v1'}\""
+        // Override via --dart-define=API_BASE_URL=... at build time
+        buildConfigField "String", "API_BASE_URL",
+                "\"${System.getenv('API_BASE_URL') ?: 'https://api.bountylive.com/api/v1'}\""
     }
 
     signingConfigs {
         release {
             keyAlias = keystoreProperties['keyAlias']
             keyPassword = keystoreProperties['keyPassword']
-            storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storeFile = keystoreProperties['storeFile']
+                    ? file(keystoreProperties['storeFile'])
+                    : null
             storePassword = keystoreProperties['storePassword']
         }
     }
@@ -58,8 +73,8 @@ android {
             minifyEnabled = true
             shrinkResources = true
             proguardFiles(
-                getDefaultProguardFile('proguard-android-optimize.txt'),
-                'proguard-rules.pro'
+                    getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
             )
             ndk {
                 abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
@@ -73,34 +88,42 @@ android {
     }
 
     bundle {
-        density {
-            enableSplit = true
-        }
-        abi {
-            enableSplit = true
-        }
-        language {
-            enableSplit = false
-        }
+        density { enableSplit = true }
+        abi     { enableSplit = true }
+        language { enableSplit = false }
     }
 }
+
+// =============================================================================
+// Kotlin Toolchain
+// =============================================================================
 
 kotlin {
     jvmToolchain(17)
 }
 
+// =============================================================================
+// Flutter
+// =============================================================================
+
 flutter {
     source = "../.."
 }
 
+// =============================================================================
+// Dependencies
+// =============================================================================
+
 dependencies {
+    // Multi-dex support
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    // Firebase Bill of Materials
     implementation platform('com.google.firebase:firebase-bom:33.6.0')
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
 
+    // Core library desugaring (required by flutter_local_notifications on SDK 36)
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 }
-
-apply plugin: 'com.google.firebase.crashlytics'
