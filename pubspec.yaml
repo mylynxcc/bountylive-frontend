@@ -116,15 +116,6 @@ flutter:
     - assets/animations/
     - assets/lottie/
 
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/icons/app-icon.png"
-  adaptive_icon_background: "#0D1117"
-  adaptive_icon_foreground: "assets/icons/app-icon.png"
-  min_sdk_android: 24
-  remove_alpha_ios: true
-
   fonts:
     - family: Poppins
       fonts:
@@ -136,3 +127,22 @@ flutter_launcher_icons:
           weight: 600
         - asset: assets/fonts/Poppins-Bold.ttf
           weight: 700
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app-icon.png"
+  adaptive_icon_background: "#0D1117"
+  adaptive_icon_foreground: "assets/icons/app-icon.png"
+  min_sdk_android: 24
+  remove_alpha_ios: true
+
+flutter_native_splash:
+  color: "#0D1117"
+  image: "assets/icons/app-icon.png"
+  android: true
+  ios: true
+  web: true
+  fullscreen: true
+  color_dark: "#0D1117"
+  image_dark: "assets/icons/app-icon.png"
