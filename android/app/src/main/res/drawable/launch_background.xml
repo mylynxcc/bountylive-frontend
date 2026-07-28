@@ -4,8 +4,8 @@
     Shows a solid background with the app launcher icon centered.
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Solid background color -->
-    <item android:drawable="@android:color/white" />
+    <!-- Solid dark background to match app theme (no white flash) -->
+    <item android:drawable="#0D1117" />
 
     <!-- App launcher icon centered -->
     <item>
